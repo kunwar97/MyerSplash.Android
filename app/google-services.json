@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "451697122529",
+    "firebase_url": "https://splash-a8cb4.firebaseio.com",
+    "project_id": "splash-a8cb4",
+    "storage_bucket": "splash-a8cb4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451697122529:android:7c5da5521bb8258c",
+        "android_client_info": {
+          "package_name": "com.dopetech.splash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "451697122529-7gj2nnm32m9i7g5tq13jekmrffetggr1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dopetech.splash",
+            "certificate_hash": "a5b723eb05ff8081ede567fc64c5d95b2554ab0c"
+          }
+        },
+        {
+          "client_id": "451697122529-10vio1q1crqrhs9g7oattek6scknb49j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVJXUjBCbdHeGY2h1OtIujxT69lczQ32Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "451697122529-10vio1q1crqrhs9g7oattek6scknb49j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

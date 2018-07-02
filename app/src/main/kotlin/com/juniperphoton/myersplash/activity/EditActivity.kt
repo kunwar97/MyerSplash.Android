@@ -24,6 +24,10 @@ import com.facebook.drawee.view.SimpleDraweeView
 import com.facebook.imagepipeline.common.ResizeOptions
 import com.facebook.imagepipeline.image.ImageInfo
 import com.facebook.imagepipeline.request.ImageRequestBuilder
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.juniperphoton.flipperlayout.FlipperLayout
 import com.juniperphoton.myersplash.App
 import com.juniperphoton.myersplash.R
@@ -71,6 +75,12 @@ class EditActivity : BaseActivity() {
     @BindView(R.id.edit_fabs_root)
     lateinit var fabsRoot: ViewGroup
 
+    @BindView(R.id.parent_layout)
+    lateinit var parentLayout: ViewGroup
+
+    @BindView(R.id.banner_ad)
+    lateinit var bannerAd: AdView
+
     private var fileUri: Uri? = null
 
     private var showingPreview: Boolean = false
@@ -86,6 +96,7 @@ class EditActivity : BaseActivity() {
 
         loadImage()
         initView()
+        loadAds()
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -107,6 +118,19 @@ class EditActivity : BaseActivity() {
 
         previewImageView.post {
             updatePreviewImage()
+        }
+    }
+
+    fun loadAds() {
+        var layout: ViewGroup = parentLayout
+        val request: AdRequest.Builder = AdRequest.Builder().addTestDevice("B735E141C67987E95A050F67A7EB7656")
+        bannerAd.loadAd(request.build())
+        bannerAd.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                bannerAd.visibility = View.VISIBLE
+                layout.setPadding(0, 0, 0, AdSize.BANNER.getHeightInPixels(this@EditActivity))
+            }
         }
     }
 
@@ -296,7 +320,8 @@ class EditActivity : BaseActivity() {
         opt.inMutable = true
 
         // Decode file with specified sample size
-        val bm = decodeBitmapFromFile(fileUri, opt) ?: throw IllegalStateException("Can't decode file")
+        val bm = decodeBitmapFromFile(fileUri, opt)
+                ?: throw IllegalStateException("Can't decode file")
 
         Pasteur.d(TAG, "file decoded, sample size:${opt.inSampleSize}, originalHeight=$originalHeight, screenH=$screenHeight")
 

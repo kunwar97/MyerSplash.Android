@@ -2,45 +2,53 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
+apply plugin: 'io.fabric'
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+
 
 android {
     signingConfigs {
-        release {
-            Properties properties = new Properties()
-            properties.load(project.rootProject.file('local.properties').newDataInputStream())
-            def key = properties.getProperty('key')
-            def password = properties.getProperty('password')
-
-            keyAlias key
-            keyPassword password
-            storeFile file('keystore/ms.jks')
-            storePassword password
+        config {
+            keyAlias 'key0'
+            keyPassword 'qwerty@123'
+            storeFile file('key.jks')
+            storePassword 'qwerty@123'
         }
     }
 
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
     defaultConfig {
-        applicationId "com.juniperphoton.myersplash"
+        applicationId "com.dopetech.splash"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 283
-        versionName "2.8.2"
+        versionCode 1
+        versionName "0.0.1"
+        multiDexEnabled true
 
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
-        def unsplashKey = properties.getProperty('unsplashKey')
+        def unsplashKey = "50fcd56858cfa2d81d551fc0059f94e010cc2e208943f2ace943ecafb12c787b"
 
         buildConfigField 'String', "UNSPLASH_APP_KEY", "\"" + unsplashKey + "\""
+
+        manifestPlaceholders = [
+                onesignal_app_id               : '4c4f390a-b907-4461-b835-0b8eccd49a1b',
+                onesignal_google_project_number: '451697122529',
+
+        ]
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
     }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.config
 
             android.applicationVariants.all { variant ->
                 variant.outputs.all {
-                    outputFileName = "myersplash_release_build.${defaultConfig.versionName}" +
+                    outputFileName = "splash_release_build.${defaultConfig.versionName}" +
                             ".${defaultConfig.versionCode}.apk"
                 }
             }
@@ -57,33 +65,44 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    testCompile 'junit:junit:4.12'
-    compile "com.android.support:support-v13:$supportLib_version"
-    compile "com.android.support:appcompat-v7:$supportLib_version"
-    compile "com.android.support:design:$supportLib_version"
-    compile "com.android.support:cardview-v7:$supportLib_version"
-    compile "com.android.support:customtabs:$supportLib_version"
-    compile "com.android.support:palette-v7:$supportLib_version"
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.facebook.fresco:fresco:1.5.0'
-    compile 'com.github.rahatarmanahmed:circularprogressview:2.5.0'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.5'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.jakewharton:butterknife:8.7.0'
-    compile 'moe.feng:AlipayZeroSdk:1.1'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.google.android:flexbox:0.3.0-alpha3'
-    compile 'com.juniperphoton:flipperlayout:1.1.1'
+    implementation 'com.google.firebase:firebase-core:11.8.0'
+    implementation 'com.google.firebase:firebase-ads:11.8.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    testImplementation 'junit:junit:4.12'
+    implementation "com.android.support:support-v13:$supportLib_version"
+    implementation "com.android.support:appcompat-v7:$supportLib_version"
+    implementation "com.android.support:design:$supportLib_version"
+    implementation "com.android.support:cardview-v7:$supportLib_version"
+    implementation "com.android.support:customtabs:$supportLib_version"
+    implementation "com.android.support:palette-v7:$supportLib_version"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.facebook.fresco:fresco:1.5.0'
+    implementation 'com.github.rahatarmanahmed:circularprogressview:2.5.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    implementation 'moe.feng:AlipayZeroSdk:1.1'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.google.android:flexbox:0.3.0-alpha3'
+    implementation 'com.juniperphoton:flipperlayout:1.1.1'
     kapt 'io.realm:realm-annotations:3.0.0'
     kapt 'io.realm:realm-annotations-processor:3.0.0'
-    kapt 'com.jakewharton:butterknife-compiler:8.7.0'
+    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
     //dagger
-    compile 'com.google.dagger:dagger:2.11'
-    kapt 'com.google.dagger:dagger-compiler:2.11'
+    implementation 'com.google.dagger:dagger:2.14.1'
+    kapt 'com.google.dagger:dagger-compiler:2.14.1'
+
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
+    implementation 'com.onesignal:OneSignal:[3.9.1, 3.99.99]'
+    implementation 'com.android.support:multidex:1.0.3'
+
+
+
 }
+
+apply plugin: 'com.google.gms.google-services'

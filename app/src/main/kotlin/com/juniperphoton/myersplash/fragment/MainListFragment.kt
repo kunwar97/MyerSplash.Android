@@ -11,6 +11,10 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.juniperphoton.myersplash.R
 import com.juniperphoton.myersplash.adapter.PhotoAdapter
 import com.juniperphoton.myersplash.data.MainContract
@@ -44,6 +48,7 @@ class MainListFragment : BasePresenterFragment<MainContract.MainPresenter>(), Ma
 
     @BindView(R.id.no_item_retry_btn)
     lateinit var retryBtn: View
+
 
     private var adapter: PhotoAdapter? = null
     private var loadMoreListener: LoadMoreListener? = null
@@ -80,6 +85,10 @@ class MainListFragment : BasePresenterFragment<MainContract.MainPresenter>(), Ma
 
         return view
     }
+
+
+
+
 
     override fun onDestroy() {
         Pasteur.info(TAG, "onDestroy $activity")

@@ -13,10 +13,15 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v4.view.ViewPager
 import android.view.View
 import android.view.ViewAnimationUtils
+import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.juniperphoton.myersplash.R
 import com.juniperphoton.myersplash.adapter.MainListFragmentAdapter
 import com.juniperphoton.myersplash.event.ScrollToTopEvent
@@ -73,6 +78,12 @@ class MainActivity : BaseActivity() {
     @BindView(R.id.search_view)
     lateinit var searchView: SearchView
 
+    @BindView(R.id.parent_layout)
+    lateinit var parentLayout: ViewGroup
+
+    @BindView(R.id.banner_ad)
+    lateinit var bannerAd: AdView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -87,6 +98,20 @@ class MainActivity : BaseActivity() {
 
         initShortcuts()
         initMainViews()
+        loadAds()
+    }
+
+    fun loadAds() {
+        var layout: ViewGroup = parentLayout
+        val request: AdRequest.Builder = AdRequest.Builder().addTestDevice("B735E141C67987E95A050F67A7EB7656")
+        bannerAd.loadAd(request.build())
+        bannerAd.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                bannerAd.visibility = View.VISIBLE
+                layout.setPadding(0, 0, 0, AdSize.BANNER.getHeightInPixels(this@MainActivity))
+            }
+        }
     }
 
     private fun initShortcuts() {

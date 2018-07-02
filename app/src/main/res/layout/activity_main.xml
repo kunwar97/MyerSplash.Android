@@ -1,71 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="activity.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="activity.MainActivity">
 
-    <include layout="@layout/status_placeholder"/>
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinator_layout"
+    <RelativeLayout
+        android:id="@+id/parent_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="false">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/toolbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/black"
-            android:theme="@style/AppTheme.AppBarOverlay">
+        <include layout="@layout/status_placeholder" />
 
-            <com.juniperphoton.myersplash.widget.PivotTitleBar
-                android:id="@+id/pivot_title_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/status_bar_height"
-                app:layout_scrollFlags="scroll|enterAlways"/>
-
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/coordinator_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            android:fitsSystemWindows="false">
 
-        <TextView
-            android:id="@+id/tag_view"
-            style="@style/TagTextView"
-            android:alpha="0"
-            android:text="# NEW"
-            tools:alpha="0"/>
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/black"
+                android:theme="@style/AppTheme.AppBarOverlay">
 
-    </android.support.design.widget.CoordinatorLayout>
+                <com.juniperphoton.myersplash.widget.PivotTitleBar
+                    android:id="@+id/pivot_title_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/status_bar_height"
+                    app:layout_scrollFlags="scroll|enterAlways" />
 
-    <com.juniperphoton.myersplash.widget.ImageDetailView
-        android:id="@+id/detail_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+            </android.support.design.widget.AppBarLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/search_fab"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <TextView
+                android:id="@+id/tag_view"
+                style="@style/TagTextView"
+                android:alpha="0"
+                android:text="# NEW"
+                tools:alpha="0" />
+
+        </android.support.design.widget.CoordinatorLayout>
+
+        <com.juniperphoton.myersplash.widget.ImageDetailView
+            android:id="@+id/detail_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/search_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="end|bottom"
+            android:layout_marginBottom="60dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/ripple"
+            android:src="@drawable/vector_ic_search_white"
+            app:backgroundTint="@color/MyerSplashThemeColor" />
+
+        <com.juniperphoton.myersplash.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+
+    </RelativeLayout>
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/banner_ad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="end|bottom"
-        android:layout_marginBottom="60dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/ripple"
-        android:src="@drawable/vector_ic_search_white"
-        app:backgroundTint="@color/MyerSplashThemeColor"/>
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/ad_banner_id" />
 
-    <com.juniperphoton.myersplash.widget.SearchView
-        android:id="@+id/search_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
 </RelativeLayout>

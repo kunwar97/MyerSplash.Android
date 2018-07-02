@@ -3,11 +3,16 @@ package com.juniperphoton.myersplash.activity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.view.View
+import android.view.ViewGroup
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.imagepipeline.core.ImagePipelineFactory
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.juniperphoton.myersplash.App
 import com.juniperphoton.myersplash.R
 import com.juniperphoton.myersplash.RealmCache
@@ -45,6 +50,12 @@ class SettingsActivity : BaseActivity() {
     @BindView(R.id.recommendation_preview)
     lateinit var recommendationPreview: View
 
+    @BindView(R.id.parent_layout)
+    lateinit var parentLayout: ViewGroup
+
+    @BindView(R.id.banner_ad)
+    lateinit var bannerAd: AdView
+
     private lateinit var savingStrings: Array<String>
     private lateinit var loadingStrings: Array<String>
 
@@ -76,6 +87,21 @@ class SettingsActivity : BaseActivity() {
 
         val loadingChoice = LocalSettingHelper.getInt(this, KEY_LIST_QUALITY, 0)
         loadingQualitySettings.content = loadingStrings[loadingChoice]
+
+        loadAds()
+    }
+
+    fun loadAds() {
+        var layout: ViewGroup = parentLayout
+        val request: AdRequest.Builder = AdRequest.Builder().addTestDevice("B735E141C67987E95A050F67A7EB7656")
+        bannerAd.loadAd(request.build())
+        bannerAd.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                bannerAd.visibility = View.VISIBLE
+                layout.setPadding(0, 0, 0, AdSize.BANNER.getHeightInPixels(this@SettingsActivity))
+            }
+        }
     }
 
     @OnClick(R.id.clear_cache_settings)

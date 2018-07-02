@@ -41,7 +41,7 @@ class AboutActivity : BaseActivity() {
         emailIntent.type = "message/rfc822"
         emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email_url)))
 
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "MyerSplash for Android ${getVersionName()} feedback")
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Splash for Android ${getVersionName()} feedback")
         emailIntent.putExtra(Intent.EXTRA_TEXT, "")
 
         startActivitySafely(intent)
